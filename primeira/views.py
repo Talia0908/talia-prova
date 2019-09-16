@@ -25,7 +25,7 @@ def create(request):
         form = ProdutoForm()
         return render(request,'produto/form.html',{'form':form})
     
-def delete(request,id):
+def produto_delete(request,id):
     produto = Produto.objects.get(pk=id)
     produto.delete()
     return redirect('/primeira/produto/list')
