@@ -1,71 +1,45 @@
-from django.shortcuts import render, redirect
-#from . models import Paciente, Medico, Medicamento
-
+from django.shortcuts import render,redirect
+from . models import Produto
+from . forms import ProdutoForm
 
 def home(request):
-    return render (request, 'home.html')
+    return render(request,'home.html')
 
-def paciente_list(request):
-    pacientes = Paciente.objects.all()
-    return render (request, 'paciente/list.html', {'pacientes': pacientes})
+def produto_list(request):
+    produtos = Produto.objects.all()
+    return render(request, 'produto/list.html',{'produtos':produtos})
 
-def paciente_show(request, paciente_id):
-    paciente = Paciente.objects.get(id=paciente_id)
-    return render (request, 'paciente/show.html', {'paciente': paciente})
+def produto_show(request,id):
+    produto = Produto.objects.get(pk=id)
+    return render(request, 'produto/show.html',{'produto':produto})
 
-def paciente_form(request):
-    if (request.method == "POST"):
-        form = PacienteForm(request.POST)
+def create(request):
+    if(request.method=='POST'):
+        form = ProdutoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/atendimento/paciente/')
+            return redirect('/primeira/produto/list')
         else:
-            return render (request, 'paciente/form.html', {'form': form})
+            return render(request,'produto/form.html',{'form':form})        
     else:
-        form = PacienteForm()
-        return render (request, 'paciente/form.html', {'form': form})
-
-def medico_list(request):
-    medicos = Medico.objects.all()
-    return render (request, 'medico/list.html', {'medicos': medicos})
-
-def medico_show(request, medico_id):
-    medico = Medico.objects.get(id=medico_id)
-    return render (request, 'medico/show.html', {'medico': medico})
-
-def medico_form(request):
-    if (request.method == "POST"):
-        form = MedicoForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('/atendimento/medico/')
-        else:
-           return render (request, 'medico/form.html', {'form': form}) 
-    else:
-        form = MedicoForm()
-        return render (request, 'medico/form.html', {'form': form})
+        form = ProdutoForm()
+        return render(request,'produto/form.html',{'form':form})
     
+def delete(request,id):
+    produto = Produto.objects.get(pk=id)
+    produto.delete()
+    return redirect('/primeira/produto/list')
 
-def agendamento_list(request):
-
-    return render (request, 'agendamento/list.html')
-
-def medicamento_list(request):
-    medicamentos = Medicamento.objects.all()
-    return render (request, 'medicamento/list.html', {'medicamentos': medicamentos})
-
-def medicamento_show(request, medicamento_id):
-    medicamento = Medicamento.objects.get(id=medicamento_id)
-    return render (request, 'medicamento/show.html', {'medicamento': medicamento})
-
-def medicamento_form(request):
-    if (request.method == "POST"):
-        form = MedicamentoForm(request.POST)
+def editar(request,id):
+    if(request.method=='POST'):
+        produto = Produto.objects.get(pk=id)
+        form = ProdutoForm(request.POST, instance = produto)
         if form.is_valid():
             form.save()
-            return redirect('/atendimento/medicamento/')
+            return redirect('/primeira/produto/list')
         else:
-            return render (request, 'medicamento/form.html', {'form': form}) 
+            return render(request,'produto/editar.html',{'form':form, 'id':id})       
     else:
-        form = MedicamentoForm()
-        return render (request, 'medicamento/form.html', {'form': form})
+        produto = Produto.objects.get(pk=id)
+        form = ProdutoForm(instance=produto)
+        return render(request,'produto/editar.html',{'form':form, 'id':id})
