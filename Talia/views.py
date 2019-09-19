@@ -6,13 +6,8 @@ def home(request):
     return render (request, 'home.html')
 
 def produto_list(request):
-    if (request.method == "POST"):
-        busca = request.POST.get('pesquisa')
-        produtos = Produto.objects.filter(nome__icontains=busca)
-        return render (request, 'produto/list.html', {'produtos': produtos})   
-    else:
-        produtos = Produto.objects.all()
-        return render (request, 'produto/list.html', {'produtos': produtos})
+    produtos = Produto.objects.all()
+    return render (request, 'produto/list.html', {'produtos': produtos})
 
 def produto_show(request, produto_id):
     produto = Produto.objects.get(id=produto_id)
@@ -129,5 +124,3 @@ def carrinho_editar(request,carrinho_id):
         carrinho = Carrinho.objects.get(pk=carrinho_id)
         form = CarrinhoForm(instance=carrinho)
         return render(request,'carrinho/editar.html',{'form':form, 'carrinho_id':carrinho_id})
-
-

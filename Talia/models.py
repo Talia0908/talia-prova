@@ -25,8 +25,6 @@ class Produto(models.Model):
     quantidade = models.IntegerField()
     carrinho = models.ForeignKey(CarrinhoDeCompras, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.nome
     
 
 

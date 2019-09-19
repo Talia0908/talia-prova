@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>dt_nasc</th>
+                <th>cpf</th>
+                <th>sexo</th>
+                <th>deletar</th>
+                <th>editar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+                <tr>
+                    <td>{{cliente.id}}</td>
+                    <td>{{cliente.nome}}</td>
+                    <td>{{cliente.dt_nasc}}</td>
+                    <td>{{cliente.cpf}}</td>  
+                    <td>{{cliente.sexo}}</td>                  
+                    <td><a href="/primeira/cliente/{{cliente.id}}">Deletar</a></td>
+                    <td><a href="/primeira/cliente/editar/{{cliente.id}}">Editar</a></td>
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p>Foram cadastrados {{ clientes | length }} clientes</p>
+{% endblock %}

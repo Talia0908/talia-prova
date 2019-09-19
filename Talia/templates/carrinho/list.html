@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cor</th>
+                <th>Tamanho</th>
+                <th>setor</th>
+                <th>deletar</th>
+                <th>editar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for carrinho in carrinhos %}
+                <tr>
+                    <td>{{carrinho.id}}</td>
+                    <td>{{carrinho.cor}}</td>
+                    <td>{{carrinho.tamanho}}</td>
+                    <td>{{carrinho.setor}}</td>                    
+                    <td><a href="/primeira/carrinho/{{carrinho.id}}">Deletar</a></td>
+                    <td><a href="/primeira/carrinho/editar/{{carrinho.id}}">Editar</a></td>
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p>Foram cadastrados {{ carrinhos | length }} carrinhos</p>
+{% endblock %}
